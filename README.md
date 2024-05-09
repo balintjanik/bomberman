@@ -2,6 +2,8 @@
 
 This game is an ongoing group project at my university, written in C#, WPF, with MVVM architecture.
 
+**Note:** the project is IN PROGRESS.
+
 ## About the game
 In Bomberman, there are 2 players on a 2D map, with walls, boxes and monsters. The players can move around the map, and place bombs that explode after 2 seconds. The walls are indestructible, while the players and monsters are killed by the explosions. When a box explodes, it either disappears or drops a powerup, but it stops the explosion from spreading. The enemies move around the map randomly, and kill the players if they step on the same field. A player wins a round if they are the last one surviving. THe goal is to be the first one to get to 3 or 5 wins, depending on the users choice!
 Extras:
@@ -49,6 +51,9 @@ All the code containing those logics mentioned above are mine, organised and com
 <img src="data/final_menu.png" alt="Menu" width="600px">
 <img src="data/final_playsettings.png" alt="Game Settings" width="600px">
 <img src="data/final_game.png" alt="Game" width="600px">
-<img src="data/final_settings.png" alt="Settings" width="600px">
 
 **Note:** the sprites Player, Bomb, Explosion and Powerup are animated.
+<img src="data/final_settings.png" alt="Settings" width="600px">
+
+## Documentation
+The documentation (use case diagram; class diagrams for model, view and viewmodel layers; package diagram) are not yet uploaded here.
