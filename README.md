@@ -50,9 +50,9 @@ All the code containing those logics mentioned above are mine, organised and com
 ### Final
 <img src="data/final_menu.png" alt="Menu" width="600px">
 <img src="data/final_playsettings.png" alt="Game Settings" width="600px">
-<img src="data/final_game.png" alt="Game" width="600px">
 
 **Note:** the sprites Player, Bomb, Explosion and Powerup are animated.
+<img src="data/final_game.png" alt="Game" width="600px">
 <img src="data/final_settings.png" alt="Settings" width="600px">
 
 ## Documentation
