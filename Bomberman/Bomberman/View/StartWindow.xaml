@@ -1,0 +1,141 @@
+﻿<Window x:Class="Bomberman.View.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bomberman.View"
+        mc:Ignorable="d"
+        Title="Bomberman" WindowState="Maximized" WindowStyle="None" FontFamily="/Files/#Upheaval TT (BRK)">
+    
+    <Window.Background>
+        <ImageBrush ImageSource="/Textures/background_green_2550x1350_150.png" Stretch="UniformToFill"></ImageBrush>
+    </Window.Background>
+    
+    <Window.Resources>
+        <ControlTemplate x:Key="Button_gray_3:1" TargetType="Button">
+            <Grid>
+                <Image x:Name="BackgroundImage" Source="/Textures/button_gray_300x100.png" Stretch="Fill"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BackgroundImage" Property="Source" Value="/Textures/button_gray_highlight_300x100.png"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="Button_gray_6:1" TargetType="Button">
+            <Grid>
+                <Image x:Name="BackgroundImage" Source="/Textures/button_gray_600x100.png" Stretch="Fill"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BackgroundImage" Property="Source" Value="/Textures/button_gray_highlight_600x100.png"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="Button_gray_1:1" TargetType="Button">
+            <Grid>
+                <Image x:Name="BackgroundImage" Source="/Textures/button_gray_100x100.png" Stretch="Fill"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BackgroundImage" Property="Source" Value="/Textures/button_gray_highlight_100x100.png"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition MaxHeight="100" Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Viewbox Grid.ColumnSpan="3"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 MaxHeight="150">
+            <Label 
+                 Content="Bomberman"
+                 Foreground="#EBEBEB" 
+                 FontSize="150"
+                 HorizontalContentAlignment="Center">
+                <Label.Effect>
+                    <DropShadowEffect Color="#a9a9a8"
+                                      Direction="315"
+                                      ShadowDepth="10"
+                                      Opacity="1"
+                                      BlurRadius="0"/>
+                </Label.Effect>
+            </Label>
+        </Viewbox>
+
+        <Viewbox Grid.Row="0"
+                 Grid.Column="4"
+                 MaxHeight="80"
+                 MaxWidth="80">
+            <Button Cursor="Hand"
+                    Command="{Binding ExitCommand}"
+                    Template="{StaticResource Button_gray_1:1}"
+                    Foreground="#EBEBEB"
+                    FontSize="40"
+                    Width="60"
+                    Height="60"
+                    Margin="10">
+                X
+            </Button>
+        </Viewbox>
+
+        <Viewbox Grid.Row="3"
+                 Grid.Column="1">
+            <Button Cursor="Hand"
+                    Command="{Binding LoadGameCommand}"
+                    Template="{StaticResource Button_gray_3:1}"
+                    Foreground="#EBEBEB"
+                    FontSize="60"
+                    Margin="10">
+                LOAD
+            </Button>
+        </Viewbox>
+
+        <Viewbox Grid.Row="3"
+                 Grid.Column="2">
+            <Button Cursor="Hand"
+                    Command="{Binding StartGameCommand}"
+                    Template="{StaticResource Button_gray_6:1}"
+                    Foreground="#EBEBEB"
+                    FontSize="60"
+                    Margin="10">
+                PLAY
+            </Button>
+        </Viewbox>
+
+        <Viewbox Grid.Row="3"
+                 Grid.Column="3">
+            <Button Cursor="Hand"
+                    Command="{Binding SettingsCommand}"
+                    Template="{StaticResource Button_gray_3:1}"
+                    Foreground="#EBEBEB"
+                    FontSize="60"
+                    Margin="10">
+                <Image Source="/Textures/settings.png" Height="50"></Image>
+            </Button>
+        </Viewbox>
+        
+    </Grid>
+</Window>

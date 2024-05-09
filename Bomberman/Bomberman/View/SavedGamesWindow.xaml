@@ -1,0 +1,101 @@
+﻿<Window x:Class="Bomberman.View.SavedGamesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bomberman.View"
+        mc:Ignorable="d"
+        Title="Bomberman" WindowState="Maximized" WindowStyle="None" FontFamily="/Files/#Upheaval TT (BRK)">
+    <Window.Background>
+        <ImageBrush ImageSource="/Textures/background_green_2550x1350_150.png" Stretch="UniformToFill"></ImageBrush>
+    </Window.Background>
+    <Window.Resources>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        </Style>
+        <ControlTemplate x:Key="Button_gray_3:1" TargetType="Button">
+            <Grid>
+                <Image x:Name="BackgroundImage" Source="/Textures/button_gray_300x100.png" Stretch="Fill"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BackgroundImage" Property="Source" Value="/Textures/button_gray_highlight_300x100.png"/>
+
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ImageBrush x:Key="Gray3:1" ImageSource="/Textures/button_gray_300x100.png" Stretch="Fill"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"></BooleanToVisibilityConverter>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="3" Margin="60, 60" Background="#80FFFFFF">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Visibility="{Binding Path=isSave, Converter={StaticResource BoolToVis}}" x:Name="tb_Save" Text="{Binding CurrentSave}" FontStyle="Italic"  FontSize="50" Margin="15"></TextBox>
+            <Border Grid.Row="1" x:Name="ListContainer" Padding="15">
+                <ListBox
+                            Name="lb_Saves"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            ScrollViewer.VerticalScrollBarVisibility="auto"
+                            ItemsSource="{Binding Saves}"
+                            Cursor="Hand"
+                            SelectedIndex="-1"
+                            MaxHeight="{Binding ElementName=ListContainer, Path=ActualHeight}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <StackPanel Orientation="Horizontal">
+
+
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontSize="50"/>
+                                    <TextBlock Text="{Binding Date}" Foreground="Gray" FontSize="30"/>
+
+                                </StackPanel>
+                                <TextBlock Margin="50,0,25,0" Text="{Binding Players}" Foreground="Gray" FontSize="50"/>
+                                <TextBlock Text="Players" Foreground="Gray" FontSize="50"/>
+                                <TextBlock Margin="50,0" Text="{Binding Map}" FontSize="50"/>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+        </Grid>
+
+
+        <Viewbox Grid.Row="1" Grid.Column="0" Stretch="Uniform" Margin="30">
+            <Button Cursor="Hand" Margin="30,40" Content="CANCEL" FontSize="50" Foreground="#EBEBEB" Template="{StaticResource Button_gray_3:1}" Command="{Binding CancelCommand}"></Button>
+        </Viewbox>
+        
+        <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform" Margin="30">
+            <Button Cursor="Hand" Visibility="Hidden" Name="btn_Delete" Margin="30,40" Content="DELETE" Click="btn_Delete_Click" FontSize="50" Foreground="#EBEBEB" Template="{StaticResource Button_gray_3:1}" Command="{Binding DeleteGameCommand}"></Button>
+        </Viewbox>
+
+        <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform" Margin="30">
+            <Button Cursor="Hand" Visibility="Hidden" Name="btn_Load" Margin="30,40" Content="START" FontSize="50" Foreground="#EBEBEB" Template="{StaticResource Button_gray_3:1}" Command="{Binding LoadGameCommand}"></Button>
+            
+        </Viewbox>
+        <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform" Margin="30">
+            <Button Cursor="Hand" Visibility="{Binding Path=isSave, Converter={StaticResource BoolToVis}}" Name="btn_Save" Margin="30,40" Content="SAVE" FontSize="50" Foreground="#EBEBEB" Template="{StaticResource Button_gray_3:1}" Command="{Binding SaveGameCommand}"></Button>
+
+        </Viewbox>
+    </Grid>
+
+</Window>

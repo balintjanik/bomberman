@@ -1,0 +1,183 @@
+﻿<Window x:Class="Bomberman.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:local="clr-namespace:Bomberman"
+        mc:Ignorable="d"
+        Title="Bomberman" WindowState="Maximized" WindowStyle="None" FontFamily="/Files/#Upheaval TT (BRK)">
+
+    <Window.Background>
+        <ImageBrush ImageSource="/Textures/background_green_2550x1350_150.png" Stretch="UniformToFill"></ImageBrush>
+    </Window.Background>
+
+    <Window.Resources>
+        <ControlTemplate x:Key="Button_gray_3:1" TargetType="Button">
+            <Grid>
+                <Image x:Name="BackgroundImage" Source="/Textures/button_gray_300x100.png" Stretch="Fill"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BackgroundImage" Property="Source" Value="/Textures/button_gray_highlight_300x100.png"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ImageBrush x:Key="Gray3:1" ImageSource="/Textures/button_gray_300x100.png" Stretch="Fill"/>
+        <ImageBrush x:Key="PlayerScore1Background" ImageSource="/Textures/player1_200x100.png" Stretch="Fill"/>
+        <ImageBrush x:Key="PlayerScore2Background" ImageSource="/Textures/player2_200x100.png" Stretch="Fill"/>
+        <ImageBrush x:Key="PlayerScore3Background" ImageSource="/Textures/player3_200x100.png" Stretch="Fill"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1.3*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="30, 60, 30, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.Column="0" Stretch="Uniform">
+                    <Grid Background="{DynamicResource Gray3:1}" Margin="30, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="/Textures/time_icon_16x16.png" Margin="30,25,0,25" Width="35" Height="32"  Stretch="Fill"/>
+                        <TextBlock Grid.Column="1" Text="{Binding GameTime}" FontSize="40" Margin="10, 25, 30, 25" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#EBEBEB" />
+                    </Grid>
+                </Viewbox>
+                <Viewbox Grid.Column="1" Stretch="Uniform">
+                    <Grid Background="{DynamicResource Gray3:1}" Margin="30, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="65"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="/Textures/exclamationmark_icon_16x16.png" Margin="30,25,0,25" Width="35" Height="32"  Stretch="Fill"/>
+                        <TextBlock Grid.Column="1" Text="{Binding ShrinkTimeLeft}" FontSize="40" Margin="10, 25, 30, 25" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#EBEBEB" />
+                    </Grid>
+                </Viewbox>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="30, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.Column="0" Stretch="Uniform">
+                    <Grid Margin="30,0" Background="{DynamicResource PlayerScore1Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="/Textures/head_13x13.png" Margin="25, 5, 5, 5" Width="45" Height="50"  Stretch="Fill"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Player1Wins}" FontSize="45" Margin="5, 5, 25, 5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#EBEBEB" />
+                    </Grid>
+                </Viewbox>
+                <Viewbox Grid.Column="1" Stretch="Uniform">
+                    <Grid Margin="30,0" Background="{DynamicResource PlayerScore2Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="/Textures/head_13x13.png" Margin="25, 5, 5, 5" Width="45" Height="50"  Stretch="Fill"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Player2Wins}" FontSize="45" Margin="5, 5, 25, 5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#EBEBEB" />
+                    </Grid>
+                </Viewbox>
+                <Viewbox Grid.Column="2" Stretch="Uniform" Visibility="{Binding Player3Stat}">
+                    <Grid Margin="30,0" Background="{DynamicResource PlayerScore3Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="/Textures/head_13x13.png" Margin="25, 5, 5, 5" Width="45" Height="50"  Stretch="Fill"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Player3Wins}" FontSize="45" Margin="5, 5, 25, 5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#EBEBEB" />
+                    </Grid>
+                </Viewbox>
+            </Grid>
+            <Border Grid.Row="2" Margin="60, 0" Background="#80FFFFFF" Padding="15">
+                <Border x:Name="ListContainer">
+                    <ListBox
+                        x:Name="MessageListBox"
+                        BorderThickness="0"
+                        Background="Transparent"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ItemsSource="{Binding Messages}"
+                        MaxHeight="{Binding ElementName=ListContainer, Path=ActualHeight}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="30" TextWrapping="Wrap">
+                                    <TextBlock>
+                                        <Run Text="{Binding Sender}" Foreground="{Binding Color}"/>
+                                        <TextBlock.Effect>
+                                            <DropShadowEffect
+                                                Color="#000000"
+                                                Direction="315"
+                                                ShadowDepth="2"
+                                                Opacity="1"
+                                                BlurRadius="0"/>
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                    <Run Text=": "/>
+                                    <Run Text="{Binding Message}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+            </Border>
+            
+            <Grid Grid.Row="3" Margin="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.Column="0" Stretch="Uniform">
+                    <Button Margin="30,40" Content="EXIT" FontSize="50" Foreground="#EBEBEB" Template="{StaticResource Button_gray_3:1}" Command="{Binding ExitGameCommand}"></Button>
+                </Viewbox>
+                <Viewbox Grid.Column="1" Stretch="Uniform">
+                    <Button Margin="30,40" Content="SAVE" FontSize="50" Foreground="#EBEBEB" Template="{StaticResource Button_gray_3:1}" Command="{Binding SaveGameCommand}"></Button>
+                </Viewbox>
+            </Grid>
+        </Grid>
+
+        <Viewbox Grid.Column="1">
+            <ItemsControl Margin="90" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Fields}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="{Binding MapSize}" Rows="{Binding MapSize}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image gif:ImageBehavior.AnimatedSource="{Binding ImageSource}"
+                            gif:ImageBehavior.AutoStart="True"
+                            gif:ImageBehavior.RepeatBehavior="Forever"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Viewbox>
+    </Grid>
+</Window>
