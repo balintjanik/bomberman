@@ -53,7 +53,9 @@ All the code containing those logics mentioned above are mine, organised and com
 
 **Note:** the sprites Player, Bomb, Explosion and Powerup are animated.
 <img src="data/final_game.png" alt="Game" width="600px">
+<img src="data/final_game2.png" alt="Game" width="600px">
 <img src="data/final_settings.png" alt="Settings" width="600px">
+<img src="data/final_saveload.png" alt="Save and Load" width="600px">
 
 ## Documentation
 The documentation (use case diagram; class diagrams for model, view and viewmodel layers; package diagram) are not yet uploaded here.
