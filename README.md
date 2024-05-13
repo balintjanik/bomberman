@@ -59,3 +59,6 @@ All the code containing those logics mentioned above are mine, organised and com
 
 ## Documentation
 The documentation (use case diagram; class diagrams for model, view and viewmodel layers; package diagram) are not yet uploaded here.
+
+## Results
+The project was so successful, that the teacher decided to nominate it to the 'Hall of Fame', which showcases the best projects made in every semester. The process is still ongoing (we need to license every asset, etc.) and the results will be posted in a few weeks.
