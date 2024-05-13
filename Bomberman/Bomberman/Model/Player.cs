@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bomberman.Model
+﻿namespace Bomberman.Model
 {
     public class Player : Character
     {
@@ -70,7 +64,7 @@ namespace Bomberman.Model
             _canStep = true;
             Position = position;
             _instantPlacement = instantPlacement;
-           
+
 
             if (_model != null)
             {
@@ -133,9 +127,10 @@ namespace Bomberman.Model
         {
             _wins = 0;
         }
-        public void PickedPowerup(PowerUpType powerup) {
+        public void PickedPowerup(PowerUpType powerup)
+        {
             bool nochange = false;
-            switch(powerup)
+            switch (powerup)
             {
                 case PowerUpType.PLUSBOMB:
                     // increase old max bomb number if NOBOMB is active
@@ -165,7 +160,7 @@ namespace Bomberman.Model
                     // set onerange otherwise
                     else
                         _oldRange = _bombRange;
-                        _bombRange = 1;
+                    _bombRange = 1;
                     break;
                 case PowerUpType.NOBOMB:
                     // nothing happens if already has nobomb
@@ -173,7 +168,7 @@ namespace Bomberman.Model
                     // set no placable bombs otherwise
                     else
                         _oldMaxBombNumber = _maxBombNumber;
-                        _maxBombNumber = 0;
+                    _maxBombNumber = 0;
                     break;
                 case PowerUpType.INSTANTPLACEMENT:
                     // nothing happens if already has instantplacement
@@ -196,7 +191,7 @@ namespace Bomberman.Model
         {
             PowerUpType type = powerUp.Type;
             _powerUps.Remove(powerUp);
-            switch(type)
+            switch (type)
             {
                 case PowerUpType.MINUSSPEED:
                     _speed = 1;
@@ -219,7 +214,8 @@ namespace Bomberman.Model
         #region Private methods
         private void OnTick(object? sender, EventArgs e)
         {
-            if (!_canStep) {
+            if (!_canStep)
+            {
                 // decrease counter on tick of model timer
                 _speedCounter--;
 

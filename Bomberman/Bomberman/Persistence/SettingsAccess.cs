@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.IO;
 using System.Windows.Input;
 
 namespace Bomberman.Persistence
@@ -16,7 +11,8 @@ namespace Bomberman.Persistence
                                         Key.Up, Key.Down, Key.Left, Key.Right, Key.Space,
                                         Key.NumPad8, Key.NumPad2, Key.NumPad4, Key.NumPad6, Key.NumPad9};
 
-        public static void SaveSettings(Key[] keys) {
+        public static void SaveSettings(Key[] keys)
+        {
             string json = JsonSerializer.Serialize(keys);
             File.WriteAllText(_path, json);
         }

@@ -1,14 +1,6 @@
 ﻿using Bomberman.Model;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Bomberman.Persistence
 {
@@ -44,7 +36,7 @@ namespace Bomberman.Persistence
                         // BOMB2 - b2,
                         // BOMB3 - b3,
                         // POWERUP - p
-                        
+
                         switch (data[j])
                         {
                             case "w":
@@ -100,14 +92,14 @@ namespace Bomberman.Persistence
             return map;
         }
 
-        public (GameMap,Save) LoadSavedGame(string id)
+        public (GameMap, Save) LoadSavedGame(string id)
         {
             Save load;
             int numOfPlayers;
             Player[] players;
             List<Enemy> enemies;
 
-            string jsonString = File.ReadAllText(_path);            
+            string jsonString = File.ReadAllText(_path);
             load = JsonConvert.DeserializeObject<List<Save>>(jsonString)!.Where(s => s.Id == id).First();
             numOfPlayers = load.Players.Count();
             players = load.Players;
@@ -136,7 +128,7 @@ namespace Bomberman.Persistence
             return (map, load);
         }
 
-        public List<Save> Save(GameMap map, Player[] players, int mapId, string name, List<Bomb> bombs, List<Enemy> enemies, int gameTime, int shrinkTime, int shrinkRound, List<int> order, int gameOverTime, int matchLength, int originalShrinkTime)
+        public List<Save> Save(Save save, GameMap map)
         {
             try
             {
@@ -152,29 +144,13 @@ namespace Bomberman.Persistence
                     }
                 }
 
-
-                var save = new Save
-                {
-                    Id = Guid.NewGuid().ToString("N"),
-                    Name = name,
-                    Timestamp = now,
-                    Players = players,
-                    MapId = "map"+mapId.ToString(),
-                    Data = jaggedArray,
-                    Bombs = bombs,
-                    Enemies = enemies,
-                    GameTime = gameTime,
-                    ShrinkRound = shrinkRound,
-                    ShrinkTime = shrinkTime,
-                    Order = order,
-                    GameOverTime = gameOverTime,
-                    MatchLength = matchLength,
-                    OriginalShrinkTime = originalShrinkTime
-                };
+                save.Id = Guid.NewGuid().ToString("N");
+                save.Timestamp = now;
+                save.Data = jaggedArray;
 
                 List<Save> jsonArray = LoadSaves();
                 jsonArray.Add(save);
-                
+
                 File.WriteAllText(_path, JsonConvert.SerializeObject(jsonArray));
                 return jsonArray;
             }
@@ -183,9 +159,9 @@ namespace Bomberman.Persistence
 
                 throw new Exception(e.Message);
             }
-           
 
-            
+
+
         }
         public void DeleteSavedGame(string id)
         {
@@ -210,6 +186,6 @@ namespace Bomberman.Persistence
             }
             return jsonArray;
         }
-       
+
     }
 }

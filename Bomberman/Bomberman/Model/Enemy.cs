@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bomberman.Model
+﻿namespace Bomberman.Model
 {
     public class Enemy : Character
     {
@@ -20,7 +14,8 @@ namespace Bomberman.Model
         #endregion
 
         #region Constructor
-        public Enemy(GameModel model, int[] position, int dir, int speed) {
+        public Enemy(GameModel model, int[] position, int dir, int speed)
+        {
             _model = model;
             Position = position;
             PrevStep = dir;

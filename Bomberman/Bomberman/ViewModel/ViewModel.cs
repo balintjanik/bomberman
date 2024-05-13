@@ -113,7 +113,8 @@ namespace Bomberman.ViewModel
             }
             return path;
         }
-        private void GenerateMap() {
+        private void GenerateMap()
+        {
             MapSize = _model.Map.Size;
             Fields = new ObservableCollection<Field>();
             for (int i = 0; i < MapSize; i++)
@@ -137,7 +138,7 @@ namespace Bomberman.ViewModel
 
         private void RefreshMap()
         {
-            foreach (Field field in Fields) 
+            foreach (Field field in Fields)
             {
                 FieldType fieldType = _model.Map.GetField(new int[] { field.X, field.Y });
                 Uri path = SetFieldType(fieldType);
@@ -194,7 +195,8 @@ namespace Bomberman.ViewModel
             OnPropertyChanged(nameof(ShrinkTimeLeft));
         }
 
-        private void Model_MessageSent(object? sender, MessageEventArgs e) {
+        private void Model_MessageSent(object? sender, MessageEventArgs e)
+        {
             _dispatcher.Invoke(() =>
             {
                 MessageType msg = new MessageType(e.Sender, e.Message);
@@ -205,7 +207,8 @@ namespace Bomberman.ViewModel
         #endregion
 
         #region Public methods
-        public void DestroyViewModel() {
+        public void DestroyViewModel()
+        {
             _model.GameAdvanced -= Model_GameAdvanced;
             _model.MapChanged -= Model_MapChanged;
         }

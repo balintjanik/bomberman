@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace Bomberman.ViewModel
 {
@@ -16,18 +11,21 @@ namespace Bomberman.ViewModel
         #endregion
 
         #region Properties
-        public string Sender {
+        public string Sender
+        {
             get { return _sender; }
             set
             {
-                if (value != _sender) {
+                if (value != _sender)
+                {
                     _sender = value;
                     OnPropertyChanged(nameof(Sender));
                 }
-                    
+
             }
         }
-        public string Message {
+        public string Message
+        {
             get { return _message; }
             set
             {
@@ -39,7 +37,8 @@ namespace Bomberman.ViewModel
 
             }
         }
-        public SolidColorBrush Color {
+        public SolidColorBrush Color
+        {
             get { return _color; }
             set
             {
@@ -54,7 +53,8 @@ namespace Bomberman.ViewModel
         #endregion
 
         #region Constructor
-        public MessageType(string sender, string message) { 
+        public MessageType(string sender, string message)
+        {
             _sender = "[" + sender + "]";
             _message = message;
             switch (sender)

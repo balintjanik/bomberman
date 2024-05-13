@@ -1,12 +1,5 @@
 ﻿using Bomberman.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Bomberman.ViewModel
 {
@@ -18,7 +11,7 @@ namespace Bomberman.ViewModel
 
         #region Properties
         public ObservableCollection<Saves> Saves { get; set; }
-        public string CurrentSave { get; set; }   
+        public string CurrentSave { get; set; }
         public string SelectedId { get; set; }
         public bool isSave { get; set; } = false;
 
@@ -78,10 +71,10 @@ namespace Bomberman.ViewModel
                         Name = _model.Saves[i].Name,
                         Players = _model.Saves[i].Players.Count().ToString(),
                         IsSelected = false
-                    }) ;
+                    });
                 }
                 OnPropertyChanged(nameof(Saves));
-                
+
             }
         }
         private void OnCancel()

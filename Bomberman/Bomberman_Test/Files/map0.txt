@@ -1,0 +1,6 @@
+5
+w x w w w
+w 1 2 b w
+w y e x w
+w r r b3 w
+w w w p w

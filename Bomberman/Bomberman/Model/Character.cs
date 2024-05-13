@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bomberman.Model
+﻿namespace Bomberman.Model
 {
     public abstract class Character
     {
@@ -18,15 +11,17 @@ namespace Bomberman.Model
 
         #region Properties
 
-        public int[] Position { 
+        public int[] Position
+        {
             get { return _position; }
-            set { _position = value; }    
+            set { _position = value; }
         }
         #endregion
 
         #region Constructor
 
-        public Character() { 
+        public Character()
+        {
             _position = new int[2];
         }
 

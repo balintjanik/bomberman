@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bomberman.Model
+﻿namespace Bomberman.Model
 {
     public class PowerUp
     {
@@ -26,7 +19,8 @@ namespace Bomberman.Model
 
         #region Constructor
 
-        public PowerUp(GameModel model, Player owner, PowerUpType type, int lifeTime) {
+        public PowerUp(GameModel model, Player owner, PowerUpType type, int lifeTime)
+        {
             _model = model;
             _owner = owner;
             _type = type;
@@ -47,7 +41,8 @@ namespace Bomberman.Model
             _model.GameAdvanced += new EventHandler(OnTick);
             _owner = owner;
         }
-        public void OnTick(object? sender, EventArgs e) {
+        public void OnTick(object? sender, EventArgs e)
+        {
             _lifeTime--;
 
             if (_lifeTime <= 0)
@@ -58,7 +53,8 @@ namespace Bomberman.Model
             }
         }
 
-        public void DestroyPowerUp(){
+        public void DestroyPowerUp()
+        {
             _model.GameAdvanced -= OnTick;
         }
 

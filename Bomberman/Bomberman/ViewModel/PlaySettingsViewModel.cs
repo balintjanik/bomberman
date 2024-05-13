@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace Bomberman.ViewModel
+﻿namespace Bomberman.ViewModel
 {
     public class PlaySettingsViewModel : ViewModelBase
     {
@@ -20,7 +13,8 @@ namespace Bomberman.ViewModel
         #endregion
 
         #region Properties
-        public bool Is2Player { 
+        public bool Is2Player
+        {
             get { return _is2Player; }
             set { _is2Player = value; }
         }
@@ -68,7 +62,7 @@ namespace Bomberman.ViewModel
             get
             {
                 if (_isMap1) return 1;
-                else if(_isMap2) return 2;
+                else if (_isMap2) return 2;
                 return 3;
             }
         }
@@ -108,7 +102,8 @@ namespace Bomberman.ViewModel
         #endregion
 
         #region Private methods
-        private void OnStartGame() { 
+        private void OnStartGame()
+        {
             StartGame!.Invoke(this, EventArgs.Empty);
         }
         private void OnCancel()

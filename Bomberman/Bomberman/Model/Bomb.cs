@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bomberman.Model
+﻿namespace Bomberman.Model
 {
     public class Bomb
     {
@@ -23,7 +17,8 @@ namespace Bomberman.Model
 
         #region Constructor
 
-        public Bomb(GameModel model, int[] position, int playerId) {
+        public Bomb(GameModel model, int[] position, int playerId)
+        {
             _model = model;
             _position = position;
             _playerId = playerId;

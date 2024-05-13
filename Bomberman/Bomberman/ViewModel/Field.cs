@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Controls;
+﻿using System.Windows.Media;
 
 namespace Bomberman.ViewModel
 {
@@ -18,7 +12,7 @@ namespace Bomberman.ViewModel
 
         public ImageSource ImageSource
         {
-            get { return _imageSource;}
+            get { return _imageSource; }
             set
             {
                 if (_imageSource != value)
@@ -28,9 +22,9 @@ namespace Bomberman.ViewModel
                 }
             }
         }
-        
+
         public Uri Path
-        { 
+        {
             get { return _path; }
             set
             {

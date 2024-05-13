@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-
-namespace Bomberman.Persistence
+﻿namespace Bomberman.Persistence
 {
     public class MessageEventArgs : EventArgs
     {
@@ -19,7 +12,8 @@ namespace Bomberman.Persistence
         public string Message { get { return _message; } }
         #endregion
 
-        public MessageEventArgs(string sender, string message) { 
+        public MessageEventArgs(string sender, string message)
+        {
             _sender = sender;
             _message = message;
         }

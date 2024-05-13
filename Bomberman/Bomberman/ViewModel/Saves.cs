@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-
-namespace Bomberman.ViewModel
+﻿namespace Bomberman.ViewModel
 {
-    public class Saves: ViewModelBase
+    public class Saves : ViewModelBase
     {
         private string _id;
         private string _name;

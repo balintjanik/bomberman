@@ -1,13 +1,9 @@
 ﻿using Bomberman.Model;
-using Bomberman.ViewModel;
 using Bomberman.Persistence;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
+using Bomberman.View;
+using Bomberman.ViewModel;
 using System.Windows;
 using System.Windows.Input;
-using Bomberman.View;
-using Microsoft.Win32;
 
 namespace Bomberman
 {
@@ -41,7 +37,7 @@ namespace Bomberman
 
             keys = SettingsAccess.LoadSettings();
 
-            
+
 
             _startViewModel = new StartViewModel();
             _startViewModel.StartGame += new EventHandler(StartView_PlaySettings);
@@ -61,7 +57,6 @@ namespace Bomberman
 
             _startView = new StartWindow();
             _startView.DataContext = _startViewModel;
-            _startView.Closing += View_Closing;
             _startView.Show();
         }
         private void Keydown(object sender, KeyEventArgs e)
@@ -77,7 +72,7 @@ namespace Bomberman
                         {
                             return;
                         }
-                        _model.PlaceBomb(_model.Map.GetPlayerPosition(player.Key), player.Key); //TODO null reference problem
+                        _model.PlaceBomb(_model.Map.GetPlayerPosition(player.Key), player.Key);
                     }
                     else //first 4 are the direction
                     {
@@ -98,14 +93,14 @@ namespace Bomberman
             _model.LoadSaves();
 
             _savedGamesView = new SavedGamesWindow();
-            _savedGamesView.DataContext = _savedGamesViewModel;            
+            _savedGamesView.DataContext = _savedGamesViewModel;
             _savedGamesViewModel.isSave = true;
 
             _savedGamesViewModel.Save -= ViewModel_SaveGame;
             _savedGamesViewModel.Save += ViewModel_SaveGame;
             _savedGamesViewModel.Load -= SavedGamesView_Load;
             _savedGamesViewModel.Load += SavedGamesView_Load;
-            
+
             _model.StopGame();
             _savedGamesView.lb_Saves.SelectedIndex = -1;
             _savedGamesView.Show();
@@ -147,7 +142,6 @@ namespace Bomberman
 
             _gameView = new MainWindow();
             _gameView.DataContext = _viewModel;
-            _gameView.Closing += View_Closing;
             _gameView.KeyDown += new KeyEventHandler(Keydown);
 
             _model.StartGame(true);
@@ -206,13 +200,13 @@ namespace Bomberman
 
             _gameView = new MainWindow();
             _gameView.DataContext = _viewModel;
-            _gameView.Closing += View_Closing;
             _gameView.KeyDown += new KeyEventHandler(Keydown);
 
             _model.StartGame();
             _gameView.Show();
         }
-        private void PlaySettingsView_Cancel(object? sender, EventArgs e) {
+        private void PlaySettingsView_Cancel(object? sender, EventArgs e)
+        {
             _startView.Show();
             _playSettingsView.Close();
         }
@@ -229,7 +223,8 @@ namespace Bomberman
             _startView.Show();
             _settingsView.Close();
         }
-        private void StartView_PlaySettings(object? sender, EventArgs e) {
+        private void StartView_PlaySettings(object? sender, EventArgs e)
+        {
             _playSettingsViewModel = new PlaySettingsViewModel();
             _playSettingsViewModel.StartGame += new EventHandler(PlaySettingsView_Start);
             _playSettingsViewModel.Cancel += new EventHandler(PlaySettingsView_Cancel);
@@ -264,23 +259,17 @@ namespace Bomberman
             _model.DestroyPowerUps();
             _viewModel.DestroyViewModel();
         }
-        private void View_Closing(object? sender, CancelEventArgs e)
+        private void StartView_Exit(object? sender, EventArgs e)
         {
-            // if (MessageBox.Show("Are you sure you want to exit?", "Bomberman", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-            // {
-            //     e.Cancel = true;
-            // }
-        }
-        private void StartView_Exit(object? sender, EventArgs e) {
             Application.Current.Shutdown();
         }
         #endregion
-        
 
 
 
 
 
-      
+
+
     }
 }

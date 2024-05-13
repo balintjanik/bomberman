@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bomberman.ViewModel
+﻿namespace Bomberman.ViewModel
 {
     public class StartViewModel : ViewModelBase
     {
@@ -23,7 +17,8 @@ namespace Bomberman.ViewModel
         #endregion
 
         #region Constructor
-        public StartViewModel() {
+        public StartViewModel()
+        {
             StartGameCommand = new DelegateCommand(param => OnStartGame());
             LoadGameCommand = new DelegateCommand(param => OnLoadGame());
             SettingsCommand = new DelegateCommand(param => OnSettings());

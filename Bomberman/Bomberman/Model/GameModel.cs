@@ -9,6 +9,7 @@ namespace Bomberman.Model
 {
     public class GameModel
     {
+        //Possible null references - handled
         #region Fields
 
         private Random _rnd;
@@ -144,6 +145,16 @@ namespace Bomberman.Model
             _originalShrinkTime = load.OriginalShrinkTime;
             _mapId = int.Parse(load.MapId.Split("map")[1].ToString());
 
+            //remove all remaining enemies 
+            if (_enemies.Count > 0)
+            {
+                foreach (var enemy in _enemies)
+                {
+                    enemy.Die();
+                }
+                _enemies.Clear();
+            }
+
             foreach (var e in load.Enemies)
             {
                 Enemy enemy = new Enemy(this, e.Position, 0, _enemySpeed);
@@ -194,7 +205,7 @@ namespace Bomberman.Model
                 }
             }
         }
-        private GameMap CopyMap()
+        private GameMap CopyMap() //to preserve the starter map
         {
             GameMap newmap = new GameMap(_starterMap.Size);
             for (int i = 0; i < _starterMap.Size; i++)
@@ -235,6 +246,7 @@ namespace Bomberman.Model
         }
         private void FindEnemies()
         {
+            //remove all remaining enemies 
             if (_enemies.Count > 0)
             {
                 foreach (var enemy in _enemies)
@@ -243,7 +255,7 @@ namespace Bomberman.Model
                 }
                 _enemies.Clear();
             }
-
+            //initialise new ones
             _enemies = new List<Enemy>();
             for (int i = 0; i < Map.Size; i++)
             {
@@ -361,14 +373,14 @@ namespace Bomberman.Model
 
         public void EnemyStep(int[] position)
         {
-            Enemy? enemy = _enemies.Where(e => e.Position[0] == position[0] && e.Position[1] == position[1]).FirstOrDefault();
+            Enemy? enemy = _enemies.Where(e => e.Position[0] == position[0] && e.Position[1] == position[1]).FirstOrDefault(); //find enemy
             if (enemy == null)
             {
                 return;
             }
-            int[] newPosition = NewPosition(enemy);
+            int[] newPosition = NewPosition(enemy); //get new position for it
             FieldType newField = _map.GetField(newPosition);
-            if (newField == FieldType.PLAYER1 || newField == FieldType.PLAYER2 || newField == FieldType.PLAYER3)
+            if (newField == FieldType.PLAYER1 || newField == FieldType.PLAYER2 || newField == FieldType.PLAYER3) //player dies when stepped on by enemy
             {
                 PlayerDied(newPosition);
             }
@@ -376,7 +388,7 @@ namespace Bomberman.Model
             {
                 newPosition = NewPosition(enemy);
             }
-            if (newField == FieldType.EXPLOSION)
+            if (newField == FieldType.EXPLOSION) //enemy dies if it steps in explosion
             {
                 EnemyDied(newPosition);
             }
@@ -390,8 +402,9 @@ namespace Bomberman.Model
             // invoke step event
             if (MapChanged is not null) MapChanged.Invoke(this, EventArgs.Empty);
         }
-        private int[] NewPosition(Enemy enemy)
+        private int[] NewPosition(Enemy enemy) 
         {
+            //find new valid position for enemy
             int[] newPosition;
             int direction;
             int r;
@@ -401,14 +414,14 @@ namespace Bomberman.Model
                 if (r < 4)
                 {
                     direction = r;
-                    enemy.PrevStep = r; //not sure of this
+                    enemy.PrevStep = r;
                 }
                 else
                 {
                     direction = enemy.PrevStep;
                 }
                 newPosition = ValidPosition(enemy.Position, direction);
-            } while (newPosition[0] == 0 && newPosition[1] == 0 || Map.GetField(newPosition) == FieldType.ENEMY);
+            } while (newPosition[0] == 0 && newPosition[1] == 0 || Map.GetField(newPosition) == FieldType.ENEMY); 
             enemy.PrevStep = direction;
             return newPosition;
         }
@@ -736,7 +749,22 @@ namespace Bomberman.Model
         }
         public void SaveGameState(int mapId, string name)
         {
-            Saves = _dataAccess.Save(_map, _players, mapId, name, _bombs, _enemies, _gameTime, _shrinkTime, _shrinkRound, _order, _gameOverTime, _matchLength, _originalShrinkTime);            
+            Save save = new Save()
+            {
+                Players = _players,
+                MapId = "map"+mapId.ToString(),
+                Bombs = _bombs,
+                Enemies = _enemies,
+                GameTime = _gameTime,
+                ShrinkTime = _shrinkTime,
+                ShrinkRound = _shrinkRound,
+                Order = _order,
+                GameOverTime = _gameOverTime,
+                MatchLength = _matchLength,
+                OriginalShrinkTime = _originalShrinkTime,
+                Name = name
+            };
+            Saves = _dataAccess.Save(save, _map);            
         }
         public void LoadGameState(string loadId)
         {
@@ -756,13 +784,14 @@ namespace Bomberman.Model
         #region GameOver
         private void IsGameOver()
         {
+            //check if all players are finished
             if (_order.Count == _numberOfPlayers)
             {
                 Finish();
             }
-            else if (_order.Count == _numberOfPlayers - 1)
+            else if (_order.Count == _numberOfPlayers - 1) //one player remains
             {
-                if (_gameOverTime == -1)
+                if (_gameOverTime == -1) //start counting back
                 {
                     _gameOverTime = 50;
                 }
@@ -814,10 +843,10 @@ namespace Bomberman.Model
                 if (GameOver is not null) GameOver.Invoke(this, EventArgs.Empty);
             }
         }
-        private void FullGameOver()
+        private void FullGameOver() //method of handling when all the rounds are finished
         {
+            
             _matchOver = true;
-
             GameOver.Invoke(this, EventArgs.Empty);
             string sender = "PLAYER" + (_players.Where(p => p.Wins >= _matchLength).First().Id + 1).ToString();
             foreach (var p in _players)
@@ -916,7 +945,7 @@ namespace Bomberman.Model
             {
                 player.Die();
                 if (MapChanged is not null) MapChanged.Invoke(this, EventArgs.Empty);
-                if (!_order.Contains(player.Id))
+                if (!_order.Contains(player.Id)) //add player to the finishing order list
                 {
                     _order.Add(player.Id);
                 }
@@ -1009,16 +1038,16 @@ namespace Bomberman.Model
             switch (powerup)
             {
                 case PowerUpType.MINUSSPEED:
-                    message = "Decreased speed expired"; // TODO: How many seconds?
+                    message = "Decreased speed expired";
                     break;
                 case PowerUpType.ONERANGE:
-                    message = "Bombs range set back to " + _players[playerId].BombRange + "!"; // TODO: How many seconds?
+                    message = "Bombs range set back to " + _players[playerId].BombRange + "!";
                     break;
                 case PowerUpType.NOBOMB:
-                    message = "Can place bombs again!"; // TODO: How many seconds?
+                    message = "Can place bombs again!";
                     break;
                 case PowerUpType.INSTANTPLACEMENT:
-                    message = "Instant bomb placement expired!"; // TODO: How many seconds?
+                    message = "Instant bomb placement expired!";
                     break;
                 default:
                     message = "Unknown powerup expired!";

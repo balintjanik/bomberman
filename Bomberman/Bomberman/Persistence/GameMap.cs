@@ -1,12 +1,4 @@
-﻿using Bomberman.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace Bomberman.Persistence
+﻿namespace Bomberman.Persistence
 {
     public class GameMap
     {
@@ -20,18 +12,18 @@ namespace Bomberman.Persistence
         #region Properties
         public int Size { get => _size; }
         public FieldType[,] Map { get => _map; }
-        public FieldType this[int x, int y] { get { return GetField(new int[2]{ x , y }); } }
+        public FieldType this[int x, int y] { get { return GetField(new int[2] { x, y }); } }
 
         #endregion
 
         #region Constructors
-        public GameMap(int size) 
+        public GameMap(int size)
         {
             _size = size;
             _map = new FieldType[size, size];
         }
 
-        public GameMap(FieldType[,] map) 
+        public GameMap(FieldType[,] map)
         {
             _size = (int)Math.Sqrt(map.Length); //given that maps are NxN sized 
             _map = map;
@@ -68,12 +60,12 @@ namespace Bomberman.Persistence
                 default:
                     return null;
             }
-            
+
             for (int i = 0; i < _size; i++)
             {
                 for (int j = 0; j < _size; j++)
                 {
-                    if (_map[i,j] == p || _map[i, j] == bp)
+                    if (_map[i, j] == p || _map[i, j] == bp)
                     {
                         return new int[2] { i, j };
                     }
@@ -81,11 +73,7 @@ namespace Bomberman.Persistence
             }
             return null;
         }
-    
-        public void GeneratePowerUp() 
-        {
-            throw new NotImplementedException();
-        }
+
         #endregion
 
     }

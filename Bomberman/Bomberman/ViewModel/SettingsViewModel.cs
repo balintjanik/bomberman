@@ -42,7 +42,8 @@ namespace Bomberman.ViewModel
             {
                 for (int j = 1; j <= 3; j++)
                 {
-                    var bindButton = new BindButton {
+                    var bindButton = new BindButton
+                    {
                         Row = j,
                         Col = i,
                         Content = _keys[(j - 1) * 5 + (i - 1)].ToString(),
@@ -56,7 +57,8 @@ namespace Bomberman.ViewModel
         #endregion
 
         #region Public methods
-        public void OnKeyDown(object sender, KeyEventArgs e) {
+        public void OnKeyDown(object sender, KeyEventArgs e)
+        {
             if (_canChange)
             {
                 _keys[(_col - 1) * 5 + (_row - 1)] = e.Key;

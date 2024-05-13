@@ -1,7 +1,6 @@
 using Bomberman.Model;
 using Bomberman.Persistence;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Interfaces;
-using System.Reflection.Metadata;
+using Newtonsoft.Json;
 namespace Bomberman_Test
 {
     [TestClass]
@@ -14,15 +13,10 @@ namespace Bomberman_Test
         [TestInitialize]
         public void Initialize()
         {
-            // Initialize if necessary  (mocked table, etc.)
+            // Initialize if necessary
             gameModel = new GameModel();
         }
 
-        [TestMethod]
-        public void MethodTest()
-        {
-            // test a specific method or function in game
-        }
         #endregion
 
         #region Explosion test
@@ -33,11 +27,11 @@ namespace Bomberman_Test
             FieldType[,] map = (FieldType[,])gameModel.Map.Map.Clone();
             Bomb b = new Bomb(gameModel, new int[] { -1, -1 }, 0);
 
-            for(int i = 0; i < map.GetLength(0); i++)
+            for (int i = 0; i < map.GetLength(0); i++)
             {
-                for (int j = 0; j < map.GetLength(1); j++) 
+                for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    Assert.AreEqual(map[i,j], gameModel.Map.Map[i,j]);
+                    Assert.AreEqual(map[i, j], gameModel.Map.Map[i, j]);
                 }
             }
             gameModel.Explosion(b, 0, b.Position);
@@ -58,14 +52,14 @@ namespace Bomberman_Test
             Bomb b = new Bomb(gameModel, new int[] { 1, 3 }, 0);
 
             Assert.AreEqual(FieldType.BOMB, gameMap[1, 3]);
-            Assert.AreEqual(FieldType.PLAYER2,gameMap[1, 2]);
+            Assert.AreEqual(FieldType.PLAYER2, gameMap[1, 2]);
             Assert.AreEqual(FieldType.PLAYER1, gameMap[1, 1]);
             Assert.AreEqual(FieldType.WALL, gameMap[1, 0]);
             Assert.AreEqual(FieldType.WALL, gameMap[0, 3]);
             Assert.AreEqual(FieldType.WALL, gameMap[1, 4]);
             Assert.AreEqual(FieldType.BOX, gameMap[2, 3]);
             Assert.AreEqual(FieldType.BOMB3, gameMap[3, 3]);
-            
+
             gameModel.Explosion(b, 0, b.Position);
 
             await Task.Delay(TimeSpan.FromSeconds(1));
@@ -144,7 +138,8 @@ namespace Bomberman_Test
             GameModel_StepIntoPowerup();
         }
 
-        private void GameModel_StepIntoWall(){
+        private void GameModel_StepIntoWall()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -156,7 +151,8 @@ namespace Bomberman_Test
             Assert.AreEqual(FieldType.WALL, gameMap[1, 0]);
         }
 
-        private void GameModel_StepIntoBox() {
+        private void GameModel_StepIntoBox()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -168,7 +164,8 @@ namespace Bomberman_Test
             Assert.AreEqual(FieldType.BOX, gameMap[0, 1]);
         }
 
-        private void GameModel_StepIntoPlayer() {
+        private void GameModel_StepIntoPlayer()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -180,7 +177,8 @@ namespace Bomberman_Test
             Assert.AreEqual(FieldType.PLAYER2, gameMap[1, 2]);
         }
 
-        private void GameModel_StepIntoEnemy() {
+        private void GameModel_StepIntoEnemy()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -192,7 +190,8 @@ namespace Bomberman_Test
             Assert.AreEqual(FieldType.ENEMY, gameMap[2, 1]);
         }
 
-        private void GameModel_StepIntoBomb() {
+        private void GameModel_StepIntoBomb()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -204,7 +203,8 @@ namespace Bomberman_Test
             Assert.AreEqual(FieldType.BOMB, gameMap[1, 3]);
         }
 
-        private void GameModel_StepIntoExplosion() {
+        private void GameModel_StepIntoExplosion()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -216,7 +216,8 @@ namespace Bomberman_Test
             Assert.AreEqual(FieldType.EXPLOSION, gameMap[2, 2]);
         }
 
-        private void GameModel_StepPlayerFromBomb() {
+        private void GameModel_StepPlayerFromBomb()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -228,7 +229,8 @@ namespace Bomberman_Test
             Assert.AreEqual(FieldType.PLAYER3, gameMap[3, 2]);
         }
 
-        private void GameModel_StepIntoPowerup() {
+        private void GameModel_StepIntoPowerup()
+        {
             gameModel.Init(0, 3);
             gameMap = gameModel.Map;
 
@@ -264,7 +266,7 @@ namespace Bomberman_Test
             gameMap = gameModel.Map;
             Assert.AreEqual(FieldType.ENEMY, gameModel.Map[2, 1]);
             gameModel.StartGame();
-            gameModel.EnemyStep(new int[] {0,0 });
+            gameModel.EnemyStep(new int[] { 0, 0 });
             Assert.AreEqual(FieldType.ENEMY, gameModel.Map[2, 1]);
         }
         #endregion
@@ -353,11 +355,11 @@ namespace Bomberman_Test
             gameModel.StartGame();
 
 
-            Assert.AreEqual(FieldType.PLAYER1, gameModel.Map[1,1]);
+            Assert.AreEqual(FieldType.PLAYER1, gameModel.Map[1, 1]);
             gameModel.Step(0, 1);
             await Task.Delay(TimeSpan.FromSeconds(0.2));
             gameModel.PlaceBomb(new int[2] { 2, 1 }, 0);
-            Assert.AreEqual(FieldType.BOMB1, gameModel.Map[2,1]);
+            Assert.AreEqual(FieldType.BOMB1, gameModel.Map[2, 1]);
             gameModel.Step(0, 1);
             gameModel.PlaceBomb(new int[2] { 3, 1 }, 0);
             Assert.AreEqual(FieldType.PLAYER1, gameModel.Map[3, 1]);
@@ -367,7 +369,7 @@ namespace Bomberman_Test
         #region Player class tests
         [TestMethod]
         public void Player_ConstructorTest()
-        { 
+        {
             Player p = new Player(gameModel, 1, 0);
             Assert.AreEqual(1, p.Id);
             Assert.AreEqual(0, p.PowerUps.Count);
@@ -386,6 +388,7 @@ namespace Bomberman_Test
         [TestMethod]
         public void Player_PowerUpHandlingTest()
         {
+            gameModel.Init();
             Player p = new Player(gameModel, 0, 0);
 
             // PLUSBOMB
@@ -453,6 +456,7 @@ namespace Bomberman_Test
         [TestMethod]
         public void Player_DieReviveTest()
         {
+            gameModel.Init();
             Player p = new Player(gameModel, 0, 0);
             p.PickedPowerup(PowerUpType.PLUSBOMB);
             p.PickedPowerup(PowerUpType.PLUSRANGE);
@@ -497,6 +501,52 @@ namespace Bomberman_Test
             Assert.AreEqual(1, p.Wins);
             p.ResetWins();
             Assert.AreEqual(0, p.Wins);
+        }
+        #endregion
+
+        #region GameModel Save tests
+        [TestMethod]
+        public void GameModel_SaveLoad()
+        {
+            string _path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Files\GameState.json");
+
+            gameModel.Init(1, 3);
+            gameModel.StartGame();
+
+            gameModel.LoadSaves();
+
+            int savesCount = gameModel.Saves.Count;
+            int gameTime = gameModel.GameTime;
+
+            gameModel.SaveGameState(1, "Test");
+
+            string jsonString = File.ReadAllText(_path);
+            string loadId = JsonConvert.DeserializeObject<List<Save>>(jsonString)!.Where(s => s.Name == "Test").First().Id;
+
+            gameModel = new GameModel();
+            gameModel.LoadSaves();
+            gameModel.LoadGameState(loadId);
+
+            Assert.AreEqual(1, gameModel.MapId);
+            Assert.AreEqual(savesCount + 1, gameModel.Saves.Count);
+            Assert.AreEqual(3, gameModel.PlayerNumber);
+            Assert.AreEqual(gameTime, gameModel.GameTime);
+
+            GameModel_DeleteSave(_path);
+        }
+
+        private void GameModel_DeleteSave(string _path)
+        {
+            gameModel.LoadSaves();
+
+            int savesCount = gameModel.Saves.Count;
+
+            string jsonString = File.ReadAllText(_path);
+            string deleteId = JsonConvert.DeserializeObject<List<Save>>(jsonString)!.Where(s => s.Name == "Test").First().Id;
+            gameModel.DeleteGameState(deleteId);
+
+
+            Assert.AreEqual(savesCount - 1, gameModel.Saves.Count);
         }
         #endregion
     }
