@@ -6,7 +6,7 @@ namespace Bomberman.Persistence
 {
     public class DataAccess
     {
-        private string _path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Files\GameState.json");
+        private string _path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files", "GameState.json");
         public DataAccess() { }
         public GameMap Load(string path)
         {
@@ -179,10 +179,13 @@ namespace Bomberman.Persistence
         public List<Save> LoadSaves()
         {
             List<Save> jsonArray = new List<Save>();
-            string jsonStringOriginal = File.ReadAllText(_path);
-            if (jsonStringOriginal != "")
+            if (File.Exists(_path))
             {
-                jsonArray = JsonConvert.DeserializeObject<List<Save>>(jsonStringOriginal);
+                string jsonStringOriginal = File.ReadAllText(_path);
+                if (jsonStringOriginal != "")
+                {
+                    jsonArray = JsonConvert.DeserializeObject<List<Save>>(jsonStringOriginal);
+                }
             }
             return jsonArray;
         }

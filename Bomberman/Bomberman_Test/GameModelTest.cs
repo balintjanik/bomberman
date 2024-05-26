@@ -508,7 +508,7 @@ namespace Bomberman_Test
         [TestMethod]
         public void GameModel_SaveLoad()
         {
-            string _path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Files\GameState.json");
+            string _path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files", "GameState.json");
 
             gameModel.Init(1, 3);
             gameModel.StartGame();
